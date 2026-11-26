@@ -389,8 +389,8 @@ function initDemos() {
       err.textContent = '';
       const svc = $$('.chips button[aria-pressed=true]', form).map(b => b.textContent.trim());
       const txt = `Hi Ivia Studio,\n\nName: ${v('f-name')}\nBusiness: ${v('f-biz') || '-'}\nPhone / email: ${v('f-contact') || '-'}\nInterested in: ${svc.join(', ') || 'Not sure yet'}\nTimeline: ${v('f-time')}\n\n${v('f-msg')}`;
-      const done = $('.done'); $('pre', done).textContent = txt; $('.wa-go', done).href = waHref(txt);
-      done.classList.add('show'); done.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      const done = $('.done'); $('pre', done).textContent = txt; $('.wa-go', done).href = waHref(txt); $('.wa-go', done).dataset.track = 'brief_whatsapp';
+      window.ivTrack && ivTrack('generate_lead', { method: 'project_brief', service: svc.join(', ') || undefined }); done.classList.add('show'); done.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
     });
     const cp = $('.copy-brief');
     cp && cp.addEventListener('click', async () => { const l = $('.lbl span', cp) || cp; try { await navigator.clipboard.writeText($('.done pre').textContent); l.textContent = 'Copied'; } catch (e) { l.textContent = 'Select the text to copy'; } setTimeout(() => l.textContent = 'Copy message ↗', 2200); });
