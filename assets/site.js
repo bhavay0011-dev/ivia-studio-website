@@ -74,6 +74,7 @@ ${useLoader ? '<div id="loader" aria-hidden="true"><div class="lc"><img src="ass
   <a class="logo" href="index.html" aria-label="Ivia Studio home" data-label="ivia studio">${LOGO}</a>
   <nav aria-label="Main"><ul>${LINKS.slice(1, 6).map(([h, t, k]) => `<li><a href="${h}" class="${k === page ? 'on' : ''}">${t}</a></li>`).join('')}<li><a class="sister" href="https://www.iviasolutions.in/" target="_blank" rel="noopener"><i class="sd" aria-hidden="true"></i>Marketing<b aria-hidden="true">&#8599;</b></a></li></ul></nav>
   <div class="nav-r"><a class="nav-cta" href="contact.html">Start a project</a>
+  <a class="sister-m" href="https://www.iviasolutions.in/" target="_blank" rel="noopener"><i class="sd" aria-hidden="true"></i>Marketing</a>
   <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><span class="mlbl">Menu</span><span class="bars"><b></b><b></b></span></button></div>
 </header>
 <div id="overlay" aria-hidden="true"><ul>${LINKS.map(([h, t, k]) => `<li><a class="big ${k === page ? 'on' : ''}" href="${h}"><span class="t">${t}</span></a></li>`).join('')}<li><a class="big sister" href="https://www.iviasolutions.in/" target="_blank" rel="noopener"><span class="t">Marketing</span><sup>&#8599;</sup></a></li></ul>
