@@ -72,18 +72,18 @@ ${useLoader ? '<div id="loader" aria-hidden="true"><div class="lc"><img src="ass
 <div id="cur" aria-hidden="true"></div><div id="ring" aria-hidden="true"><span></span></div><div id="prog" aria-hidden="true"></div>
 <header class="nav">
   <a class="logo" href="index.html" aria-label="Ivia Studio home" data-label="ivia studio">${LOGO}</a>
-  <nav aria-label="Main"><ul>${LINKS.slice(1, 6).map(([h, t, k]) => `<li><a href="${h}" class="${k === page ? 'on' : ''}">${t}</a></li>`).join('')}</ul></nav>
+  <nav aria-label="Main"><ul>${LINKS.slice(1, 6).map(([h, t, k]) => `<li><a href="${h}" class="${k === page ? 'on' : ''}">${t}</a></li>`).join('')}<li><a class="sister" href="https://www.iviasolutions.in/" target="_blank" rel="noopener"><i class="sd" aria-hidden="true"></i>Marketing<b aria-hidden="true">&#8599;</b></a></li></ul></nav>
   <div class="nav-r"><a class="nav-cta" href="contact.html">Start a project</a>
   <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><span class="mlbl">Menu</span><span class="bars"><b></b><b></b></span></button></div>
 </header>
-<div id="overlay" aria-hidden="true"><ul>${LINKS.map(([h, t, k]) => `<li><a class="big ${k === page ? 'on' : ''}" href="${h}"><span class="t">${t}</span></a></li>`).join('')}</ul>
+<div id="overlay" aria-hidden="true"><ul>${LINKS.map(([h, t, k]) => `<li><a class="big ${k === page ? 'on' : ''}" href="${h}"><span class="t">${t}</span></a></li>`).join('')}<li><a class="big sister" href="https://www.iviasolutions.in/" target="_blank" rel="noopener"><span class="t">Marketing</span><sup>&#8599;</sup></a></li></ul>
 <div class="ov-foot"><span>${esc(CONFIG.email)}</span><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span>${esc(CONFIG.place)}</span></div></div>`);
 const foot = $('footer');
 if (foot) foot.innerHTML = `<div class="wrap">
 <div class="fcols"><div><a class="logo" href="index.html">${LOGO}</a>
 <p class="muted" style="margin-top:18px;max-width:36ch">100+ websites and apps built from scratch, AI that works for you, WhatsApp bots that answer for you, and Google visibility that brings customers in.</p></div>
 <div><h4>Build</h4><a href="work.html">Our Work</a><a href="build.html">Websites & Apps</a><a href="build.html#stores">Shopify & WooCommerce</a><a href="build.html#scope">Hosting & Domain</a></div>
-<div><h4>Automate & Grow</h4><a href="ai.html">AI Integrations</a><a href="whatsapp.html">WhatsApp Bots</a><a href="growth.html">Google Business & Ads</a></div>
+<div><h4>Automate & Grow</h4><a href="ai.html">AI Integrations</a><a href="whatsapp.html">WhatsApp Bots</a><a href="growth.html">Google Business & Ads</a><a href="https://www.iviasolutions.in/" target="_blank" rel="noopener">Marketing &#8599;</a></div>
 <div><h4>Talk to us</h4><a href="contact.html">Project form</a><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span class="muted" style="display:block;padding:5px 0">${esc(CONFIG.email)}</span></div></div>
 <div class="bigword" aria-hidden="true">${'ivia studio'.split('').map((c, i) => `<span${i > 4 ? ' class="grad"' : ''}>${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</div>
 <div class="fbot"><span>© ${new Date().getFullYear()} Ivia Studio · ${esc(CONFIG.place)}</span><span>A sister studio of ivia solutions.</span></div></div>`;

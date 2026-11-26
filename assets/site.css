@@ -612,3 +612,13 @@ html.pv-open,html.pv-open body{overflow:hidden}
 .pv-arrow:hover,.pv-arrow:focus-visible{background:rgba(255,255,255,.12);transform:scale(1.06)}
 .pv-arrow[hidden]{display:none}
 @media (max-width:640px){.pv-win{width:100%}.pv-cta{width:100%;justify-content:center}.pv-nav{width:100%;flex-wrap:wrap}}
+/* sister link */
+.nav ul a.sister{display:flex;align-items:center;gap:7px;margin-left:4px;background:#f3f1ec;color:#0b0d16;transition:transform .4s var(--ease),background .3s}
+.nav ul a.sister:hover{background:#fff;transform:scale(1.04)}
+.nav ul a.sister b{font-weight:600;transition:transform .4s var(--ease)}
+.nav ul a.sister:hover b{transform:translate(2px,-2px)}
+.nav ul a.sister .sd{position:relative;width:7px;height:7px;border-radius:50%;background:#ff5a1f}
+.nav ul a.sister .sd:after{content:"";position:absolute;inset:0;border-radius:50%;background:#ff5a1f;animation:sdPulse 1.8s ease-out infinite}
+@keyframes sdPulse{from{transform:scale(1);opacity:.8}to{transform:scale(3);opacity:0}}
+#overlay a.big.sister sup{font:600 .3em/1 var(--fm,monospace);padding:.5em .7em;border-radius:99px;background:#f3f1ec;color:#0b0d16}
+@media (prefers-reduced-motion:reduce){.nav ul a.sister .sd:after{animation:none}}
