@@ -60,7 +60,7 @@ const svg = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 /* =====================================================================
    SHARED CHROME: sky canvas, loader, tiles, cursor, nav, menu, footer
    ===================================================================== */
-const LINKS = [['index.html', 'Home', 'home'], ['work.html', 'Work', 'work'], ['build.html', 'Websites & apps', 'build'], ['ai.html', 'AI', 'ai'], ['whatsapp.html', 'WhatsApp bots', 'whatsapp'], ['growth.html', 'Google growth', 'growth'], ['contact.html', 'Contact', 'contact']];
+const LINKS = [['index.html', 'Home', 'home'], ['work.html', 'Our work', 'work'], ['build.html', 'Websites & apps', 'build'], ['ai.html', 'AI', 'ai'], ['whatsapp.html', 'WhatsApp bots', 'whatsapp'], ['growth.html', 'Google growth', 'growth'], ['contact.html', 'Contact', 'contact']];
 const waHref = txt => { const d = CONFIG.whatsapp.replace(/\D/g, ''); return `https://wa.me/${d.length > 7 ? d : ''}?text=${encodeURIComponent(txt || 'Hi Ivia Studio, I want to talk about a project.')}`; };
 let seen = false; try { seen = sessionStorage.getItem('ivst_seen') === '1'; sessionStorage.setItem('ivst_seen', '1'); } catch (e) {}
 const useLoader = page === 'home' && !seen && !reduce;
@@ -82,7 +82,7 @@ const foot = $('footer');
 if (foot) foot.innerHTML = `<div class="wrap">
 <div class="fcols"><div><a class="logo" href="index.html">${LOGO}</a>
 <p class="muted" style="margin-top:18px;max-width:36ch">100+ websites and apps built from scratch, AI that works for you, WhatsApp bots that answer for you, and Google visibility that brings customers in.</p></div>
-<div><h4>Build</h4><a href="work.html">Our work</a><a href="build.html">Websites & apps</a><a href="build.html#scope">Hosting & domain</a></div>
+<div><h4>Build</h4><a href="work.html">Our work</a><a href="build.html">Websites & apps</a><a href="build.html#stores">Shopify & WooCommerce</a><a href="build.html#scope">Hosting & domain</a></div>
 <div><h4>Automate & grow</h4><a href="ai.html">AI integrations</a><a href="whatsapp.html">WhatsApp bots</a><a href="growth.html">Google Business & Ads</a></div>
 <div><h4>Talk to us</h4><a href="contact.html">Project form</a><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span class="muted" style="display:block;padding:5px 0">${esc(CONFIG.email)}</span></div></div>
 <div class="bigword" aria-hidden="true">${'ivia studio'.split('').map((c, i) => `<span${i > 4 ? ' class="grad"' : ''}>${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</div>
@@ -152,21 +152,39 @@ const MS = id => `assets/work/${id}.webp`;
 /* Real sites from the MotionSites library: the motion-first style we build in */
 const WORK = [
   { n: 'Orvante', c: 'Agency website', k: 'web', img: MS('hf_20261027_053930_87ab1421-7fc4-4597-a7ae-7039d2527f8b') },
-  { n: 'Aperture Row', c: 'Camera store', k: 'shop', img: MS('hf_20261123_104457_c0ea8833-256a-4b48-a20c-e9f4ae620faf') },
+  { n: 'Aperture Row', c: 'Camera store · Shopify', k: 'shop', img: MS('hf_20261123_104457_c0ea8833-256a-4b48-a20c-e9f4ae620faf') },
   { n: 'Penthouse Rain', c: 'Real-estate website', k: 'web', img: MS('hf_20261117_065919_b459fd24-ef98-4ef4-b6cd-68f1bfe1b10c') },
   { n: 'Data Signal', c: 'Analytics dashboard', k: 'dash', img: MS('hf_20260812_015959_62ae1d8c-21a0-4691-b0ca-9ec991f2fe34') },
-  { n: 'Tea Blends', c: 'D2C store', k: 'shop', img: MS('hf_20261124_054357_3e9e9293-9e9e-4b07-83df-e9cb118f6144') },
+  { n: 'Tea Blends', c: 'Tea store · Shopify', k: 'shop', img: MS('hf_20261124_054357_3e9e9293-9e9e-4b07-83df-e9cb118f6144') },
   { n: 'Travel Booking', c: 'Booking website', k: 'web', img: MS('hf_20261115_013620_005ba2d3-1ec9-451d-89df-8f6c8b8793fc') },
   { n: 'Reelmark', c: 'Creator web app', k: 'app', img: MS('hf_20261021_033850_f6a98168-2aa6-47b5-8fa8-6d28a9992580') },
   { n: 'Ice Monastery', c: 'Restaurant website', k: 'web', img: MS('hf_20261124_064446_b13290af-c72f-4370-a073-9df089145e9f') },
-  { n: 'Style Studio', c: 'Fashion store', k: 'shop', img: MS('hf_20261112_042122_cf936edb-b3fe-4c16-9376-65d04123b24e') },
+  { n: 'Style Studio', c: 'Fashion store · WooCommerce', k: 'shop', img: MS('hf_20261112_042122_cf936edb-b3fe-4c16-9376-65d04123b24e') },
   { n: 'Moss Island', c: 'SaaS product site', k: 'dash', img: MS('hf_20261106_032528_99eb9a00-a553-40b6-8b97-017e918971c6') },
   { n: 'Laptop Portfolio', c: 'Portfolio website', k: 'web', img: MS('hf_20261111_030305_aa366bc0-85e3-4f61-82c1-cbf8ae8217a3') },
   { n: 'Virtual Fitting', c: 'Try-on web app', k: 'app', img: MS('hf_20261105_044353_68703b49-82fd-480a-9809-3a3747e1fe7b') },
-  { n: 'Protein Bars', c: 'D2C store', k: 'shop', img: MS('hf_20261116_165100_f97e5fa9-4f9f-418c-96aa-c5eb4869baa7') },
+  { n: 'Protein Bars', c: 'Snack brand · Shopify', k: 'shop', img: MS('hf_20261116_165100_f97e5fa9-4f9f-418c-96aa-c5eb4869baa7') },
   { n: 'Quantum Core', c: 'Data platform', k: 'dash', img: MS('hf_20260815_191439_307f1c76-0696-4003-9186-fdd50bb30540') },
   { n: 'Coastal Cards', c: 'Agency website', k: 'web', img: MS('hf_20261118_070300_fbfb5672-a668-45a4-83b7-f52c95bb1320') },
-  { n: 'Print Gallery', c: 'Art store', k: 'shop', img: MS('hf_20261120_092118_e87bf2ac-38dd-413e-a9ed-17ba8a940916') }
+  { n: 'Print Gallery', c: 'Art store · WooCommerce', k: 'shop', img: MS('hf_20261120_092118_e87bf2ac-38dd-413e-a9ed-17ba8a940916') },
+  { n: 'Ledgely', c: 'Finance web app', k: 'app', img: MS('hf_20261023_010253_d1856960-d74b-42d4-9293-d710fa60e097') },
+  { n: 'Runway Store', c: 'Fashion store · Shopify', k: 'shop', img: MS('hf_20261122_150938_719887ec-965b-4722-be5a-56ed29b8c30f') },
+  { n: 'Job Board', c: 'Hiring dashboard', k: 'dash', img: MS('hf_20261115_061409_62da665a-6f17-4293-83a6-d343bdb815e1') },
+  { n: 'Book Library', c: 'Online library website', k: 'web', img: MS('hf_20261121_035428_eb9aa86f-7f80-4f16-a4f8-f8f0703e805f') },
+  { n: 'Lamp Shop', c: 'Lighting store · WooCommerce', k: 'shop', img: MS('hf_20261123_074649_7aa33c0f-ce09-4211-9ef3-1b2131434bc6') },
+  { n: 'Fitness Tracker', c: 'Health web app', k: 'app', img: MS('hf_20260730_090700_2609c7d2-29a8-4880-9e59-84ebcb657b04') },
+  { n: 'Vertex', c: 'Product store · Shopify', k: 'shop', img: MS('hf_20260912_163540_9f0f8a66-ec5f-46f7-adf8-e094a211d489') },
+  { n: 'Peakline', c: 'SaaS dashboard', k: 'dash', img: MS('hf_20260827_183912_a5d791ed-2b71-4a25-9c82-61f432a27a53') },
+  { n: 'Performance Run', c: 'Fitness brand website', k: 'web', img: MS('hf_20260807_011509_e042d124-2ef5-49fb-89e9-e2d7a8b1eb21') },
+  { n: 'Workwear Co.', c: 'Workwear store · WooCommerce', k: 'shop', img: MS('hf_20261122_134817_4e1bfd8e-9e0d-44ce-be29-fce28633dee6') },
+  { n: 'Label Workspace', c: 'Team workspace app', k: 'app', img: MS('hf_20261115_072503_5ee28ad5-58c0-4177-9d65-5df7825c1ea3') },
+  { n: 'Clothing Rail', c: 'Apparel store · Shopify', k: 'shop', img: MS('hf_20261108_064619_5aab2bf3-3e14-41b3-9421-250f3c9eac47') },
+  { n: 'Book Shelf', c: 'Publisher website', k: 'web', img: MS('hf_20261113_001238_d350986c-e035-432b-8a9f-abf9c6fc8bae') },
+  { n: 'Eyewear Store', c: 'Eyewear store · WooCommerce', k: 'shop', img: MS('hf_20261117_061153_62099a93-6540-4a13-9818-4ec34e953040') },
+  { n: 'Loops', c: '3D product store · Shopify', k: 'shop', img: MS('hf_20261024_010948_048422f0-152e-4f66-8f6e-88dd6aca7d9d') },
+  { n: 'Smarter Growth', c: 'Marketing landing page', k: 'web', img: MS('hf_20261023_005013_f6d14b11-c6c1-4214-be5f-c8181fff9669') },
+  { n: 'Spin', c: 'Product launch store · Shopify', k: 'shop', img: MS('hf_20261107_113531_66f5b631-47f4-45da-8094-29dc04544d61') },
+  { n: 'Showroom', c: '3D showroom · Shopify', k: 'shop', img: MS('hf_20261114_015033_70380c67-4a70-464a-9b20-c3e15c39bdee') }
 ];
 function mockHTML(w, eager) {
   return `<img class="shot" src="${w.img}" alt="${esc(w.n)}, ${esc(w.c)}" decoding="async">`;
@@ -175,8 +193,8 @@ function initWork() {
   /* 3D ring on the home page */
   const stage = $('.ring-stage');
   if (stage) {
-    const ring = $('.ring', stage), N = WORK.length;
-    ring.innerHTML = WORK.map((w, i) => `<div class="ring-item" data-i="${i}"><div class="wcard" data-cursor="Drag">${mockHTML(w)}</div><div class="wcap"><b>${esc(w.n)}</b><span>${esc(w.c)}</span></div></div>`).join('');
+    const ring = $('.ring', stage), RING = WORK.slice(0, 16), N = RING.length;
+    ring.innerHTML = RING.map((w, i) => `<div class="ring-item" data-i="${i}"><div class="wcard" data-cursor="Drag">${mockHTML(w)}</div><div class="wcap"><b>${esc(w.n)}</b><span>${esc(w.c)}</span></div></div>`).join('');
     const items = $$('.ring-item', ring);
     let R = 0, cw = 0;
     const lay = () => {

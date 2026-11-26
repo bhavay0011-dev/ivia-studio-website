@@ -569,3 +569,11 @@ main,footer,.nav{will-change:auto}
 
 /* fix6c: hover transition only after the slide-in is done */
 .bigword:not(.in) span{transition:color .3s}
+
+/* fix7: store example row on the build page */
+.store-shots{display:grid;gap:22px;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:10px}
+.store-shots figure{margin:0}
+.store-shots .frame{position:relative;aspect-ratio:3/2.1;border-radius:18px;overflow:hidden;background:#0c0e15;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.store-shots figcaption{display:flex;justify-content:space-between;gap:10px;margin-top:12px;font-size:15px}
+.store-shots figcaption span{color:var(--mut)}
+@media(max-width:800px){.store-shots{grid-template-columns:minmax(0,1fr)}}
