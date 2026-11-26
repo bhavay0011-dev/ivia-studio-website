@@ -84,7 +84,7 @@ var IVIA_CHAT = {
   function waLink(text) { return 'https://wa.me/' + C.WHATSAPP + '?text=' + encodeURIComponent(text); }
   function inr(n, d) { return '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: d == null ? 0 : d, minimumFractionDigits: d || 0 }); }
   function r2(n) { return Math.round(n * 100) / 100; }
-  function okUrl(u) { return /^(https?:\/\/|mailto:|tel:|#|[a-z0-9-]+\.html(#[\w-]+)?(\?[\w=&%-]*)?$)/i.test(u); }
+  function okUrl(u) { return /^(https?:\/\/|mailto:|tel:|#|\.\/$|[a-z0-9-]+(\.html)?(#[\w-]+)?(\?[\w=&%-]*)?$)/i.test(u); }
   // markdown-lite: **bold**, [text](url), - lists, 1. lists, [[calc block]], paragraphs
   function md(t) {
     var h = esc(t);
@@ -200,7 +200,7 @@ var IVIA_CHAT = {
     if (price != null && acos != null && cvr != null && !be) wantsCpc = true;
     if (wantsCpc && cpa != null && cvr != null && acos == null) {
       var mc = cpa * cvr / 100;
-      return { id: 'calc_gcpc', t: 'Max CPC = target CPA × conversion rate\n[[' + inr(cpa) + ' × ' + cvr + '% = ' + inr(r2(mc), 2) + ']]\nBid around **' + inr(r2(mc), 2) + '** per click to hit your target CPA. More on [Google Ads](growth.html).', chips: ['How do you manage Google Ads?', 'lead:Get a free audit'] };
+      return { id: 'calc_gcpc', t: 'Max CPC = target CPA × conversion rate\n[[' + inr(cpa) + ' × ' + cvr + '% = ' + inr(r2(mc), 2) + ']]\nBid around **' + inr(r2(mc), 2) + '** per click to hit your target CPA. More on [Google Ads](growth).', chips: ['How do you manage Google Ads?', 'lead:Get a free audit'] };
     }
     if (wantsCpc) {
       if (price != null && acos != null && cvr != null) {
@@ -442,7 +442,7 @@ var IVIA_CHAT = {
       else respond(chip.textContent, 'chip');
     }
     var link = e.target.closest('a[href]');
-    if (link && /^[a-z0-9-]+\.html/i.test(link.getAttribute('href') || '')) sset('ivc_reopen', '1');
+    if (link && /^(\.\/|[a-z0-9-]+(\.html)?([?#]|$))/i.test(link.getAttribute('href') || '')) sset('ivc_reopen', '1');
   });
   function lastUser() { for (var i = hist.length - 1; i >= 0; i--) if (hist[i].r === 'u') return plain(hist[i].t).slice(0, 200); return ''; }
   F.addEventListener('submit', function (e) { e.preventDefault(); var v = TA.value; TA.value = ''; grow(); respond(v); });

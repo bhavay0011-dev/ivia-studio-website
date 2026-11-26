@@ -60,7 +60,7 @@ const svg = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 /* =====================================================================
    SHARED CHROME: sky canvas, loader, tiles, cursor, nav, menu, footer
    ===================================================================== */
-const LINKS = [['index.html', 'Home', 'home'], ['work.html', 'Our Work', 'work'], ['build.html', 'Websites & Apps', 'build'], ['ai.html', 'AI', 'ai'], ['whatsapp.html', 'WhatsApp Bots', 'whatsapp'], ['growth.html', 'Google Growth', 'growth'], ['contact.html', 'Contact', 'contact']];
+const LINKS = [['./', 'Home', 'home'], ['work', 'Our Work', 'work'], ['build', 'Websites & Apps', 'build'], ['ai', 'AI', 'ai'], ['whatsapp', 'WhatsApp Bots', 'whatsapp'], ['growth', 'Google Growth', 'growth'], ['contact', 'Contact', 'contact']];
 const waHref = txt => { const d = CONFIG.whatsapp.replace(/\D/g, ''); return `https://wa.me/${d.length > 7 ? d : ''}?text=${encodeURIComponent(txt || 'Hi Ivia Studio, I want to talk about a project.')}`; };
 let seen = false; try { seen = sessionStorage.getItem('ivst_seen') === '1'; sessionStorage.setItem('ivst_seen', '1'); } catch (e) {}
 const useLoader = page === 'home' && !seen && !reduce;
@@ -71,9 +71,9 @@ ${useLoader ? '<div id="loader" aria-hidden="true"><div class="lc"><img src="ass
 <div id="tiles" aria-hidden="true"><i></i></div>
 <div id="cur" aria-hidden="true"></div><div id="ring" aria-hidden="true"><span></span></div><div id="prog" aria-hidden="true"></div>
 <header class="nav">
-  <a class="logo" href="index.html" aria-label="Ivia Studio home" data-label="ivia studio">${LOGO}</a>
+  <a class="logo" href="./" aria-label="Ivia Studio home" data-label="ivia studio">${LOGO}</a>
   <nav aria-label="Main"><ul>${LINKS.slice(1, 6).map(([h, t, k]) => `<li><a href="${h}" class="${k === page ? 'on' : ''}">${t}</a></li>`).join('')}<li><a class="sister" href="https://www.iviasolutions.in/" target="_blank" rel="noopener"><i class="sd" aria-hidden="true"></i>Marketing<b aria-hidden="true">&#8599;</b></a></li></ul></nav>
-  <div class="nav-r"><a class="nav-cta" href="contact.html">Start a project</a>
+  <div class="nav-r"><a class="nav-cta" href="contact">Start a project</a>
   <a class="sister-m" href="https://www.iviasolutions.in/" target="_blank" rel="noopener"><i class="sd" aria-hidden="true"></i>Marketing</a>
   <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><span class="mlbl">Menu</span><span class="bars"><b></b><b></b></span></button></div>
 </header>
@@ -81,11 +81,11 @@ ${useLoader ? '<div id="loader" aria-hidden="true"><div class="lc"><img src="ass
 <div class="ov-foot"><span>${esc(CONFIG.email)}</span><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span>${esc(CONFIG.place)}</span></div></div>`);
 const foot = $('footer');
 if (foot) foot.innerHTML = `<div class="wrap">
-<div class="fcols"><div><a class="logo" href="index.html">${LOGO}</a>
+<div class="fcols"><div><a class="logo" href="./">${LOGO}</a>
 <p class="muted" style="margin-top:18px;max-width:36ch">100+ websites and apps built from scratch, AI that works for you, WhatsApp bots that answer for you, and Google visibility that brings customers in.</p></div>
-<div><h4>Build</h4><a href="work.html">Our Work</a><a href="build.html">Websites & Apps</a><a href="build.html#stores">Shopify & WooCommerce</a><a href="build.html#scope">Hosting & Domain</a></div>
-<div><h4>Automate & Grow</h4><a href="ai.html">AI Integrations</a><a href="whatsapp.html">WhatsApp Bots</a><a href="growth.html">Google Business & Ads</a><a href="https://www.iviasolutions.in/" target="_blank" rel="noopener">Marketing &#8599;</a></div>
-<div><h4>Talk to us</h4><a href="contact.html">Project form</a><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span class="muted" style="display:block;padding:5px 0">${esc(CONFIG.email)}</span></div></div>
+<div><h4>Build</h4><a href="work">Our Work</a><a href="build">Websites & Apps</a><a href="build#stores">Shopify & WooCommerce</a><a href="build#scope">Hosting & Domain</a></div>
+<div><h4>Automate & Grow</h4><a href="ai">AI Integrations</a><a href="whatsapp">WhatsApp Bots</a><a href="growth">Google Business & Ads</a><a href="https://www.iviasolutions.in/" target="_blank" rel="noopener">Marketing &#8599;</a></div>
+<div><h4>Talk to us</h4><a href="contact">Project form</a><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span class="muted" style="display:block;padding:5px 0">${esc(CONFIG.email)}</span></div></div>
 <div class="bigword" aria-hidden="true">${'ivia studio'.split('').map((c, i) => `<span${i > 4 ? ' class="grad"' : ''}>${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</div>
 <div class="fbot"><span>© ${new Date().getFullYear()} Ivia Studio · ${esc(CONFIG.place)}</span><span>A sister studio of ivia solutions.</span></div></div>`;
 $$('[data-ic]').forEach(e => e.innerHTML = svg(e.dataset.ic));
@@ -546,7 +546,7 @@ const scrollToEl = el => { if (!el) return; lenis ? lenis.scrollTo(el, { duratio
 /* page transitions: a grid of tiles flips in from where you clicked */
 const tiles = $('#tiles'), tileEls = $$('i', tiles);
 tiles.style.animation = 'none';
-const isInternal = a => { const h = a.getAttribute('href') || ''; return /^[\w-]+\.html([?#].*)?$/.test(h) && !a.target; };
+const isInternal = a => { const h = a.getAttribute('href') || ''; return /^(\.\/|[\w-]+(\.html)?)([?#].*)?$/.test(h) && !a.target; };
 document.addEventListener('click', e => {
   if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
   const a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
@@ -758,7 +758,7 @@ $$('.cta .display').forEach(h => { if (!reduce) gsap.fromTo(h, { scale: 1.35, le
   const pv = document.createElement('div'); pv.id = 'pv'; pv.hidden = true;
   pv.setAttribute('role', 'dialog'); pv.setAttribute('aria-modal', 'true'); pv.setAttribute('aria-label', 'Design preview');
   pv.innerHTML = '<div class="pv-bg"></div><div class="pv-win"><div class="pv-bar"><i></i><i></i><i></i><span class="pv-url"></span><button class="pv-x" type="button" aria-label="Close preview">&#x2715;</button></div><div class="pv-view"><img class="pv-img" alt="" decoding="async"></div></div>'
-    + '<div class="pv-foot"><div class="pv-cap"><b></b><span></span></div><div class="pv-nav"><span class="pv-n"></span><button type="button" class="pv-arrow pv-prev" aria-label="Previous design">&#8592;</button><button type="button" class="pv-arrow pv-next" aria-label="Next design">&#8594;</button><a class="btn solid pv-cta" href="contact.html">Start a project like this</a></div></div>';
+    + '<div class="pv-foot"><div class="pv-cap"><b></b><span></span></div><div class="pv-nav"><span class="pv-n"></span><button type="button" class="pv-arrow pv-prev" aria-label="Previous design">&#8592;</button><button type="button" class="pv-arrow pv-next" aria-label="Next design">&#8594;</button><a class="btn solid pv-cta" href="contact">Start a project like this</a></div></div>';
   document.body.appendChild(pv);
   const win = $('.pv-win', pv), img = $('.pv-img', pv), bg = $('.pv-bg', pv), foot = $('.pv-foot', pv);
   let list = [], idx = 0, back = null;
@@ -769,7 +769,7 @@ $$('.cta .display').forEach(h => { if (!reduce) gsap.fromTo(h, { scale: 1.35, le
     $('.pv-cap b', pv).textContent = d.n; $('.pv-cap span', pv).textContent = d.c;
     $('.pv-url', pv).textContent = f.closest('.store-shots') ? `${d.c} · ${d.n}` : d.n;
     $('.pv-n', pv).textContent = `${pad(idx + 1)} / ${pad(list.length)}`;
-    $('.pv-cta', pv).href = 'contact.html' + (d.k === 'shop' ? '?s=store' : '?s=build');
+    $('.pv-cta', pv).href = 'contact' + (d.k === 'shop' ? '?s=store' : '?s=build');
     $$('.pv-arrow', pv).forEach(b => b.hidden = list.length < 2);
     img.classList.remove('kb'); void img.offsetWidth; if (!reduce) img.classList.add('kb');
     if (hasG) gsap.fromTo(img, { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' });
