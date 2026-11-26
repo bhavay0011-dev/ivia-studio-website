@@ -60,7 +60,7 @@ const svg = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 /* =====================================================================
    SHARED CHROME: sky canvas, loader, tiles, cursor, nav, menu, footer
    ===================================================================== */
-const LINKS = [['./', 'Home', 'home'], ['work', 'Our Work', 'work'], ['build', 'Websites & Apps', 'build'], ['ai', 'AI', 'ai'], ['whatsapp', 'WhatsApp Bots', 'whatsapp'], ['growth', 'Google Growth', 'growth'], ['contact', 'Contact', 'contact']];
+const LINKS = [['./', 'Home', 'home'], ['work', 'Our Work', 'work'], ['build', 'Websites & Apps', 'build'], ['ai', 'AI', 'ai'], ['whatsapp', 'WhatsApp Bots', 'whatsapp'], ['growth', 'Google Growth', 'growth'], ['contact', 'Contact', 'contact'], ['locations', 'Locations', 'locations'], ['blog', 'Blog', 'blog']];
 const waHref = txt => { const d = CONFIG.whatsapp.replace(/\D/g, ''); return `https://wa.me/${d.length > 7 ? d : ''}?text=${encodeURIComponent(txt || 'Hi Ivia Studio, I want to talk about a project.')}`; };
 let seen = false; try { seen = sessionStorage.getItem('ivst_seen') === '1'; sessionStorage.setItem('ivst_seen', '1'); } catch (e) {}
 const useLoader = page === 'home' && !seen && !reduce;
@@ -85,7 +85,8 @@ if (foot) foot.innerHTML = `<div class="wrap">
 <p class="muted" style="margin-top:18px;max-width:36ch">100+ websites and apps built from scratch, AI that works for you, WhatsApp bots that answer for you, and Google visibility that brings customers in.</p></div>
 <div><h4>Build</h4><a href="work">Our Work</a><a href="build">Websites & Apps</a><a href="build#stores">Shopify & WooCommerce</a><a href="build#scope">Hosting & Domain</a></div>
 <div><h4>Automate & Grow</h4><a href="ai">AI Integrations</a><a href="whatsapp">WhatsApp Bots</a><a href="growth">Google Business & Ads</a><a href="https://www.iviasolutions.in/" target="_blank" rel="noopener">Marketing &#8599;</a></div>
-<div><h4>Talk to us</h4><a href="contact">Project form</a><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span class="muted" style="display:block;padding:5px 0">${esc(CONFIG.email)}</span></div></div>
+<div><h4>Talk to us</h4><a href="contact">Project form</a><a href="blog">Blog</a><a href="locations">Locations</a><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span class="muted" style="display:block;padding:5px 0">${esc(CONFIG.email)}</span></div></div>
+<div class="floc"><span>We build websites for</span> <a href="website-development-mumbai">Mumbai</a> · <a href="website-development-delhi">Delhi NCR</a> · <a href="website-development-bangalore">Bengaluru</a> · <a href="website-development-pune">Pune</a> · <a href="website-development-hyderabad">Hyderabad</a> · <a href="website-development-chennai">Chennai</a> · <a href="website-development-kolkata">Kolkata</a> · <a href="website-development-ahmedabad">Ahmedabad</a> · <a href="website-development-jaipur">Jaipur</a> · <a href="website-development-chandigarh">Chandigarh</a> · <a href="website-development-usa">USA</a> · <a href="website-development-uk">UK</a> · <a href="website-development-uae">UAE</a> · <a href="website-development-australia">Australia</a> · <a href="website-development-canada">Canada</a> · <a href="website-development-singapore">Singapore</a></div>
 <div class="bigword" aria-hidden="true">${'ivia studio'.split('').map((c, i) => `<span${i > 4 ? ' class="grad"' : ''}>${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</div>
 <div class="fbot"><span>© ${new Date().getFullYear()} Ivia Studio · ${esc(CONFIG.place)}</span><span>A sister studio of ivia solutions.</span></div></div>`;
 $$('[data-ic]').forEach(e => e.innerHTML = svg(e.dataset.ic));
