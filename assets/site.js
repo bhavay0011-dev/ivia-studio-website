@@ -13,6 +13,9 @@ const CONFIG = { email: 'connect@bidvista.org', whatsapp: '918607070505', place:
 const touch = matchMedia('(hover: none)').matches;
 const small = innerWidth < 760;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* phones: fewer 3D layers so mobile Safari does not run out of memory and reload */
+const lite = touch || small;
+if (lite) document.documentElement.classList.add('lite');
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -123,6 +126,7 @@ function initRoom() {
   const POS = home
     ? [[54, 8, 20, 520, -12], [78, 4, 21, 460, -24], [58, 50, 16, 300, -10], [80, 52, 17, 260, -20], [40, -6, 12, 780, 6], [66, 28, 12, 840, -12], [92, 30, 12, 720, -30], [46, 72, 11, 140, 4], [-8, -4, 13, 900, 26], [-8, 70, 12, 880, 26]]
     : [[62, 6, 18, 420, -14], [82, 30, 20, 380, -24], [70, 62, 14, 220, -16], [-8, 4, 13, 760, 24], [40, -6, 11, 700, 6], [92, -2, 11, 680, -28]];
+  if (lite) POS.length = home ? 5 : 3;
   room.el = document.createElement('div'); room.el.className = 'room'; room.el.setAttribute('aria-hidden', 'true');
   room.el.innerHTML = `<div class="wall"></div><div class="beam"></div><div class="floor"></div><div class="screens">${POS.map((p, i) =>
     `<div class="tv-p" style="--x:${p[0]}%;--y:${p[1]}%;--w:${p[2]}vw;--d:${(p[3] / 900).toFixed(2)};--z:${-p[3]}px"><div class="tv flick" style="--ry:${p[4]}deg;--fd2:${(i * 1.7).toFixed(1)}s">${mockHTML(WORK[(i * 5) % WORK.length], true)}</div></div>`).join('')}</div><div class="dust"></div><div class="vig"></div>`;
@@ -195,7 +199,7 @@ function initWork() {
   /* 3D ring on the home page */
   const stage = $('.ring-stage');
   if (stage) {
-    const ring = $('.ring', stage), RING = WORK.slice(0, 16), N = RING.length;
+    const ring = $('.ring', stage), RING = WORK.slice(0, lite ? 10 : 16), N = RING.length;
     ring.innerHTML = RING.map((w, i) => `<div class="ring-item" data-i="${i}"><div class="wcard" data-cursor="Drag">${mockHTML(w)}</div><div class="wcap"><b>${esc(w.n)}</b><span>${esc(w.c)}</span></div></div>`).join('');
     const items = $$('.ring-item', ring);
     let R = 0, cw = 0;
@@ -415,7 +419,7 @@ function initTunnel() {
     ['WhatsApp', 'lang', 'Hinglish', 'talks like your customers'], ['Infra', 'globe', 'Domain & email', 'in your name'],
     ['AI', 'doc', 'Document reader', 'invoices into data'], ['Google', 'chart', 'Tracking', 'every call counted']
   ];
-  const SIDES = 6, RINGS = small ? 7 : 9;
+  const SIDES = 6, RINGS = lite ? 4 : 9;
   const cards = [];
   for (let r = 0; r < RINGS; r++) for (let s = 0; s < SIDES; s++) {
     const idx = (r * 7 + s * 5) % items.length, [tag, ic, title, sub] = items[idx];
@@ -430,7 +434,7 @@ function initTunnel() {
   }
   let R, apo, side, D, L;
   const layout = () => {
-    R = Math.max(innerWidth * .5, innerHeight * .62); apo = R * Math.cos(Math.PI / 6); side = R; D = side * 1.15; L = RINGS * D;
+    R = Math.max(innerWidth * .5, innerHeight * (lite ? .42 : .62)); apo = R * Math.cos(Math.PI / 6); side = R; D = side * 1.15; L = RINGS * D;
     cards.forEach(c => { c.el.style.width = (side - 14) + 'px'; c.el.style.height = (D - 22) + 'px'; c.el.style.marginLeft = -(side - 14) / 2 + 'px'; c.el.style.marginTop = -(D - 22) / 2 + 'px'; });
   };
   layout(); addEventListener('resize', layout);
