@@ -60,7 +60,7 @@ const svg = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" str
 /* =====================================================================
    SHARED CHROME: sky canvas, loader, tiles, cursor, nav, menu, footer
    ===================================================================== */
-const LINKS = [['index.html', 'Home', 'home'], ['work.html', 'Our work', 'work'], ['build.html', 'Websites & apps', 'build'], ['ai.html', 'AI', 'ai'], ['whatsapp.html', 'WhatsApp bots', 'whatsapp'], ['growth.html', 'Google growth', 'growth'], ['contact.html', 'Contact', 'contact']];
+const LINKS = [['index.html', 'Home', 'home'], ['work.html', 'Our Work', 'work'], ['build.html', 'Websites & Apps', 'build'], ['ai.html', 'AI', 'ai'], ['whatsapp.html', 'WhatsApp Bots', 'whatsapp'], ['growth.html', 'Google Growth', 'growth'], ['contact.html', 'Contact', 'contact']];
 const waHref = txt => { const d = CONFIG.whatsapp.replace(/\D/g, ''); return `https://wa.me/${d.length > 7 ? d : ''}?text=${encodeURIComponent(txt || 'Hi Ivia Studio, I want to talk about a project.')}`; };
 let seen = false; try { seen = sessionStorage.getItem('ivst_seen') === '1'; sessionStorage.setItem('ivst_seen', '1'); } catch (e) {}
 const useLoader = page === 'home' && !seen && !reduce;
@@ -82,8 +82,8 @@ const foot = $('footer');
 if (foot) foot.innerHTML = `<div class="wrap">
 <div class="fcols"><div><a class="logo" href="index.html">${LOGO}</a>
 <p class="muted" style="margin-top:18px;max-width:36ch">100+ websites and apps built from scratch, AI that works for you, WhatsApp bots that answer for you, and Google visibility that brings customers in.</p></div>
-<div><h4>Build</h4><a href="work.html">Our work</a><a href="build.html">Websites & apps</a><a href="build.html#stores">Shopify & WooCommerce</a><a href="build.html#scope">Hosting & domain</a></div>
-<div><h4>Automate & grow</h4><a href="ai.html">AI integrations</a><a href="whatsapp.html">WhatsApp bots</a><a href="growth.html">Google Business & Ads</a></div>
+<div><h4>Build</h4><a href="work.html">Our Work</a><a href="build.html">Websites & Apps</a><a href="build.html#stores">Shopify & WooCommerce</a><a href="build.html#scope">Hosting & Domain</a></div>
+<div><h4>Automate & Grow</h4><a href="ai.html">AI Integrations</a><a href="whatsapp.html">WhatsApp Bots</a><a href="growth.html">Google Business & Ads</a></div>
 <div><h4>Talk to us</h4><a href="contact.html">Project form</a><a href="${waHref()}" target="_blank" rel="noopener">WhatsApp ↗</a><span class="muted" style="display:block;padding:5px 0">${esc(CONFIG.email)}</span></div></div>
 <div class="bigword" aria-hidden="true">${'ivia studio'.split('').map((c, i) => `<span${i > 4 ? ' class="grad"' : ''}>${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</div>
 <div class="fbot"><span>© ${new Date().getFullYear()} Ivia Studio · ${esc(CONFIG.place)}</span><span>A sister studio of ivia solutions.</span></div></div>`;
@@ -688,7 +688,7 @@ $$('[data-reveal]').forEach(el => { if (el.closest('.hero,.skyhero')) return; gs
 $$('[data-count]').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => countTo(el) }));
 $$('.step').forEach(s => ScrollTrigger.create({ trigger: s, start: 'top 70%', onEnter: () => s.classList.add('in') }));
 /* sub-page hero: words drift up and soften as you leave */
-if ($('.hero') && heroWords.length) gsap.to(heroWords, { yPercent: -40, opacity: .15, stagger: .02, ease: 'none', scrollTrigger: { trigger: '.hero', start: '35% top', end: 'bottom top', scrub: 1 } });
+if ($('.hero') && heroH && !reduce) gsap.fromTo(heroH, { y: 0, opacity: 1 }, { y: -60, opacity: .15, ease: 'none', immediateRender: false, scrollTrigger: { trigger: '.hero', start: '35% top', end: 'bottom top', scrub: 1 } });
 /* stacking service cards: each one sinks back as the next slides over it */
 const sc = $$('.scards .panel');
 if (innerWidth > 900) sc.forEach((p, i) => { if (i === sc.length - 1) return; gsap.to(p, { scale: .9, filter: 'brightness(.55)', ease: 'none', scrollTrigger: { trigger: sc[i + 1], start: 'top bottom', end: 'top 120px', scrub: true } }); });
@@ -738,6 +738,75 @@ $$('.bubbles').forEach(bx => {
 $$('.stat b').forEach(b => { if (!reduce) gsap.fromTo(b, { opacity: 0, filter: 'blur(10px) brightness(3)' }, { opacity: 1, filter: 'blur(0px) brightness(1)', duration: 1, ease: 'steps(6)', clearProps: 'filter', scrollTrigger: { trigger: b, start: 'top 90%', once: true } }); });
 /* ---- fx: CTA headline pulls in from huge as you arrive ---- */
 $$('.cta .display').forEach(h => { if (!reduce) gsap.fromTo(h, { scale: 1.35, letterSpacing: '.04em' }, { scale: 1, letterSpacing: '-.03em', ease: 'none', scrollTrigger: { trigger: h, start: 'top bottom', end: 'center 55%', scrub: 1 } }); });
+
+/* ---- fx8: example sites come alive on hover and open in a viewer ---- */
+{
+  const FR = '.wgrid .witem .frame, .store-shots .frame';
+  const hasG = typeof gsap !== 'undefined' && !reduce;
+  const capOf = f => { const it = f.closest('.witem, figure'); const b = it && $('.wcap b, figcaption b', it), s = it && $('.wcap span, figcaption span', it);
+    return { n: b ? b.textContent : '', c: s ? s.textContent : '', k: it && it.dataset.k ? it.dataset.k : (f.closest('.store-shots') ? 'shop' : '') }; };
+  $$(FR).forEach(f => {
+    const d = capOf(f), im = $('img', f);
+    f.setAttribute('data-cursor', 'View'); f.tabIndex = 0; f.setAttribute('role', 'button'); f.setAttribute('aria-label', `View ${d.n}${d.c ? ', ' + d.c : ''}`);
+    f.insertAdjacentHTML('beforeend', '<span class="pv-pill" aria-hidden="true">View design <b>&#8599;</b></span>');
+    if (!hasG || !im) return;
+    f.addEventListener('pointerenter', () => gsap.to(im, { scale: 1.16, xPercent: -3, yPercent: -5, duration: 7, ease: 'sine.inOut', overwrite: true }));
+    f.addEventListener('pointerleave', () => gsap.to(im, { scale: 1, xPercent: 0, yPercent: 0, duration: .9, ease: 'expo.out', overwrite: true }));
+  });
+
+  const pv = document.createElement('div'); pv.id = 'pv'; pv.hidden = true;
+  pv.setAttribute('role', 'dialog'); pv.setAttribute('aria-modal', 'true'); pv.setAttribute('aria-label', 'Design preview');
+  pv.innerHTML = '<div class="pv-bg"></div><div class="pv-win"><div class="pv-bar"><i></i><i></i><i></i><span class="pv-url"></span><button class="pv-x" type="button" aria-label="Close preview">&#x2715;</button></div><div class="pv-view"><img class="pv-img" alt="" decoding="async"></div></div>'
+    + '<div class="pv-foot"><div class="pv-cap"><b></b><span></span></div><div class="pv-nav"><span class="pv-n"></span><button type="button" class="pv-arrow pv-prev" aria-label="Previous design">&#8592;</button><button type="button" class="pv-arrow pv-next" aria-label="Next design">&#8594;</button><a class="btn solid pv-cta" href="contact.html">Start a project like this</a></div></div>';
+  document.body.appendChild(pv);
+  const win = $('.pv-win', pv), img = $('.pv-img', pv), bg = $('.pv-bg', pv), foot = $('.pv-foot', pv);
+  let list = [], idx = 0, back = null;
+  const pad = n => String(n).padStart(2, '0');
+  const show = i => {
+    idx = (i + list.length) % list.length; const f = list[idx], d = capOf(f), src = $('img', f);
+    img.src = src.currentSrc || src.src; img.alt = `${d.n}${d.c ? ', ' + d.c : ''}`;
+    $('.pv-cap b', pv).textContent = d.n; $('.pv-cap span', pv).textContent = d.c;
+    $('.pv-url', pv).textContent = f.closest('.store-shots') ? `${d.c} · ${d.n}` : d.n;
+    $('.pv-n', pv).textContent = `${pad(idx + 1)} / ${pad(list.length)}`;
+    $('.pv-cta', pv).href = 'contact.html' + (d.k === 'shop' ? '?s=store' : '?s=build');
+    $$('.pv-arrow', pv).forEach(b => b.hidden = list.length < 2);
+    img.classList.remove('kb'); void img.offsetWidth; if (!reduce) img.classList.add('kb');
+    if (hasG) gsap.fromTo(img, { opacity: 0 }, { opacity: 1, duration: .5, ease: 'power2.out' });
+  };
+  const flip = f => { const a = f.getBoundingClientRect(), b = win.getBoundingClientRect();
+    return { x: a.left - b.left, y: a.top - b.top, scaleX: a.width / b.width, scaleY: a.height / b.height, transformOrigin: '0 0' }; };
+  const open = f => {
+    const root = f.closest('.wgrid, .store-shots');
+    list = $$('.frame', root).filter(x => !x.closest('.hide')); idx = Math.max(0, list.indexOf(f)); back = f;
+    pv.hidden = false; document.documentElement.classList.add('pv-open'); lenis && lenis.stop(); show(idx);
+    if (hasG) { gsap.fromTo(win, flip(f), { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: .85, ease: 'expo.inOut', clearProps: 'transform' });
+      gsap.fromTo(bg, { opacity: 0 }, { opacity: 1, duration: .5 });
+      gsap.fromTo(foot, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .6, delay: .45, ease: 'power3.out' }); }
+    $('.pv-x', pv).focus({ preventScroll: true });
+  };
+  const close = () => {
+    if (pv.hidden) return;
+    const done = () => { typeof gsap !== 'undefined' && gsap.set([win, bg, foot], { clearProps: 'all' }); pv.hidden = true; img.classList.remove('kb');
+      document.documentElement.classList.remove('pv-open'); lenis && lenis.start(); const t = list[idx] || back; t && t.focus({ preventScroll: true }); };
+    if (!hasG) return done();
+    const f = list[idx], r = f.getBoundingClientRect(), seen = r.bottom > 0 && r.top < innerHeight;
+    gsap.to(foot, { opacity: 0, duration: .2 }); gsap.to(bg, { opacity: 0, duration: .45, delay: .2 });
+    gsap.to(win, seen ? { ...flip(f), duration: .65, ease: 'expo.inOut', onComplete: done } : { opacity: 0, scale: .94, duration: .35, onComplete: done });
+  };
+  document.addEventListener('click', e => { const f = e.target.closest(FR); if (f) { e.preventDefault(); open(f); } });
+  document.addEventListener('keydown', e => {
+    const f = e.target.closest && e.target.closest(FR);
+    if (f && pv.hidden && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(f); return; }
+    if (pv.hidden) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') show(idx + 1);
+    else if (e.key === 'ArrowLeft') show(idx - 1);
+    else if (e.key === 'Tab') { const fs = $$('button:not([hidden]), a', pv), i = fs.indexOf(document.activeElement);
+      e.preventDefault(); fs[(i + (e.shiftKey ? -1 : 1) + fs.length) % fs.length].focus(); }
+  });
+  bg.addEventListener('click', close); $('.pv-x', pv).addEventListener('click', close);
+  $('.pv-prev', pv).addEventListener('click', () => show(idx - 1)); $('.pv-next', pv).addEventListener('click', () => show(idx + 1));
+}
 
 addEventListener('load', () => ScrollTrigger.refresh());
 } catch (err) {
