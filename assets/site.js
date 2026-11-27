@@ -394,6 +394,12 @@ function initDemos() {
       const svc = $$('.chips button[aria-pressed=true]', form).map(b => b.textContent.trim());
       const txt = `Hi Ivia Studio,\n\nName: ${v('f-name')}\nBusiness: ${v('f-biz') || '-'}\nPhone / email: ${v('f-contact') || '-'}\nInterested in: ${svc.join(', ') || 'Not sure yet'}\nTimeline: ${v('f-time')}\n\n${v('f-msg')}`;
       const done = $('.done'); $('pre', done).textContent = txt; $('.wa-go', done).href = waHref(txt); $('.wa-go', done).dataset.track = 'brief_whatsapp';
+      /* send the brief to the lead inbox too (email + admin); WhatsApp stays as the fast path */
+      const fd = new FormData(); fd.append('_subject', 'New Ivia Studio project brief'); fd.append('source', 'studio project form');
+      [['name', 'f-name'], ['business', 'f-biz'], ['contact', 'f-contact'], ['timeline', 'f-time'], ['message', 'f-msg']].forEach(([k, id]) => fd.append(k, v(id)));
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('f-contact'))) fd.append('email', v('f-contact'));
+      fd.append('services', svc.join(', ') || 'Not sure yet'); fd.append('page', location.pathname);
+      fetch('https://ivia-chat.bhavay0011.workers.dev/lead', { method: 'POST', body: fd, headers: { Accept: 'application/json' } }).catch(() => {});
       window.ivTrack && ivTrack('generate_lead', { method: 'project_brief', service: svc.join(', ') || undefined }); done.classList.add('show'); done.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
     });
     const cp = $('.copy-brief');
